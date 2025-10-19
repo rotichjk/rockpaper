@@ -46,7 +46,7 @@
 </head>
 
 <body>
-  <h3>Rock Paper Scissors - Jay_Cash_TV <i class="fa fa-meetup" aria-hidden="true"></i></h3>
+  <h3>Rock Paper Scissors - Jay_Cash_TV<i class="fa fa-meetup" aria-hidden="true"></i></h3>
   <button onclick="
   playgame('Rock');
   displayUpdate();
@@ -69,26 +69,22 @@
   <button class="autoplay" onclick="autoplay();">Autoplay</button>
 
 <script>
+  let isautoplaying =false;
+  let intervalId;
   function autoplay(){
-    setInterval(function(){
-      playgame(playmove());
-      displayUpdate();
+    if (!isautoplaying){
+      intervalId = setInterval(function(){
+        playgame(pickComputerMove());
+        displayUpdate();
 
-    },1000);  
+      },1000);  
+      isautoplaying = true
+    }
+    else{
+      clearInterval(intervalId);
+      isautoplaying = false;
+    }
   } 
-  function playmove(){
-    play = Math.random();
-    if (play <= 1/3){
-      playermove = 'Rock';
-    }
-    else if(play >1/3 && play <=2/3){
-      playermove = 'Scissors';
-    }
-    else if(play >2/3 && play <1){
-      playermove = 'Paper';
-    }
-    return playermove;
-  }
       let score = JSON.parse(localStorage.getItem('score')) || {
         wins : 0,
         losses : 0,
@@ -153,6 +149,4 @@
   </script>
 </body>
 
-
 </html>
-
